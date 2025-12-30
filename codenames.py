@@ -20,35 +20,99 @@ FPS = 60
 # Background Color
 BLACK = (0,0,0)
 WHITE = (255,255,255)
-GREY = (150,150,150)
+GREY = (200,200,200)
+BLUE = (0,0,255)
+RED = (255,0,0)
 screen.fill(BLACK) 
 
 # Initialize fonts
 titleFont = pg.font.SysFont("Arial",48,bold=True)
 menuFont = pg.font.SysFont("Arial",36)
 gameFont = pg.font.SysFont("Arial",24)
-wordsFont = pg.font.SysFont("Arial",36,bold=True)
+wordFont = pg.font.SysFont("Arial",36,bold=True)
+scoreFont = pg.font.SysFont("Arial",60,bold=True)
 
 # Load board image
 board = pg.transform.scale(pg.image.load("images/board.png"),winSize)
 
+# Load images
+cardSize = (5*61,3*60)
+cardImg = pg.transform.scale(pg.image.load("images/word-card.png"),cardSize)
+cardSelectImg = pg.transform.scale(pg.image.load("images/word-card-select.png"),cardSize)
+cardRedImg = pg.transform.scale(pg.image.load("images/word-card-red.png"),cardSize)
+cardBlueImg = pg.transform.scale(pg.image.load("images/word-card-blue.png"),cardSize)
+cardBlackImg = pg.transform.scale(pg.image.load("images/word-card-black.png"),cardSize)
+redImg1 = pg.transform.scale(pg.image.load("images/red1.png"),cardSize)
+redImg2 = pg.transform.scale(pg.image.load("images/red2.png"),cardSize)
+redImg3 = pg.transform.scale(pg.image.load("images/red1.png"),cardSize)
+redImg4 = pg.transform.scale(pg.image.load("images/red2.png"),cardSize)
+redImgs = [redImg1,redImg2,redImg3,redImg4]
+blueImg1 = pg.transform.scale(pg.image.load("images/blue1.png"),cardSize)
+blueImg2 = pg.transform.scale(pg.image.load("images/blue2.png"),cardSize)
+blueImg3 = pg.transform.scale(pg.image.load("images/blue1.png"),cardSize)
+blueImg4 = pg.transform.scale(pg.image.load("images/blue2.png"),cardSize)
+blueImgs = [blueImg1,blueImg2,blueImg3,blueImg4]
+bystImg1 = pg.transform.scale(pg.image.load("images/byst1.png"),cardSize)
+bystImg2 = pg.transform.scale(pg.image.load("images/byst2.png"),cardSize)
+bystImg3 = pg.transform.scale(pg.image.load("images/byst1.png"),cardSize)
+bystImg4 = pg.transform.scale(pg.image.load("images/byst2.png"),cardSize)
+bystImgs = [bystImg1,bystImg2,bystImg3,bystImg4]
+assnImg = pg.transform.scale(pg.image.load("images/assassin.png"),cardSize)
+
 # Read all words into a list, only once
-with open('wordlist.txt', 'r') as f:
+with open('wordlist-test.txt', 'r') as f:
     wordlist = [line.strip() for line in f if line.strip()]
 
 words = random.sample(wordlist,25)
 
 #----------------------------------------------------------------------------------------------------------------------
-# Draw all images on screen in current position
+# Inialize constants and variables
+#----------------------------------------------------------------------------------------------------------------------
+# Settings
+numAssns = 1 # Number of assassins
+turnTime = 300 # Time limit of each turn in seconds
+# imgStyle = 0 # WIP
+
+# Card numbers
+cardNums = list(range(0,25))
+
+# Card positions (top left corners)
+cardSpacing = 10
+cardPos = [[0]*2]*25
+i = 0
+for r in range(-2,3):
+    for c in range(-2,3):
+        cardPos[i] = [winSize[0]//2 - cardSize[0]//2 + r*(cardSize[0]+cardSpacing),winSize[1]//2 - cardSize[1]//2 + c*(cardSize[1]+cardSpacing) + 35]
+        i = i + 1
+
+rbFirst = random.randrange(0,2)
+if rbFirst:
+    redCards = np.array(random.sample(cardNums,8))
+    blueCards = np.array(random.sample(list(set(cardNums)-set(redCards)),9))
+else:
+    redCards = np.array(random.sample(cardNums,9))
+    blueCards = np.array(random.sample(list(set(cardNums)-set(redCards)),8))
+
+assnCard = np.array(random.sample(list((set(cardNums)-set(redCards))-set(blueCards)),numAssns))
+#----------------------------------------------------------------------------------------------------------------------
+# Draw all images on screen with various options
 #----------------------------------------------------------------------------------------------------------------------
 def draw(opts):
     # Draw board
     screen.fill(BLACK) 
     screen.blit(board,(0,0))
-    # Display each marble at current position
-    # for c in range(0,4):
-        # for m in range(0,4):
-            # screen.blit(marbs[c],pos[c,m]) 
+    # Display card grid
+    for i in range(0,25):
+        if i in redCards:
+            screen.blit(cardRedImg,cardPos[i]) 
+        elif i in blueCards:
+            screen.blit(cardBlueImg,cardPos[i]) 
+        elif i in assnCard:
+            screen.blit(cardBlackImg,cardPos[i]) 
+        else:
+            screen.blit(cardImg,cardPos[i]) 
+        wordText = wordFont.render(words[i],True,BLACK)
+        screen.blit(wordText,(cardPos[i][0] + cardSize[0]//2 - wordText.get_width()//2,cardPos[i][1] + 110))
     # Waiting to roll text
     if opts == 1:
         # textTurn = gameFont.render(colors[turn]+"'s turn.",True,WHITE)
@@ -78,7 +142,7 @@ def menu():
     draw(0)
     # Draw menu background
     menuSize = 400
-    pg.draw.rect(screen,(200,200,200),pg.Rect(winSize[0]//2 - menuSize//2,winSize[1]//2 - menuSize//2,menuSize,menuSize))
+    pg.draw.rect(screen,GREY,pg.Rect(winSize[0]//2 - menuSize//2,winSize[1]//2 - menuSize//2,menuSize,menuSize))
     # Draw menu text
     title = titleFont.render("Codenames",True,BLACK)
     screen.blit(title,(winSize[0]//2 - title.get_width()//2,winSize[1]//2 - title.get_height()//2 - 130))
@@ -112,6 +176,9 @@ def menu():
                 elif event.key == pg.K_ESCAPE:
                     pg.quit()
                     quit()
+            elif event.type == pg.MOUSEBUTTONDOWN:
+                return newMenu()
+
 
 #----------------------------------------------------------------------------------------------------------------------
 # Show new game menu and wait for selection
@@ -121,7 +188,7 @@ def newMenu():
     draw(0)
     # Draw menu background
     menuSize = 400
-    pg.draw.rect(screen,(200,200,200),pg.Rect(winSize[0]//2 - menuSize//2,winSize[1]//2 - menuSize//2,menuSize,menuSize))
+    pg.draw.rect(screen,GREY,pg.Rect(winSize[0]//2 - menuSize//2,winSize[1]//2 - menuSize//2,menuSize,menuSize))
     # Draw menu text
     title = titleFont.render("Codenames",True,BLACK)
     screen.blit(title,(winSize[0]//2 - title.get_width()//2,winSize[1]//2 - title.get_height()//2 - 130))
@@ -174,6 +241,8 @@ def newMenu():
                 # Back to main menu (ESC)
                 elif event.key == pg.K_ESCAPE:
                     return menu()
+            elif event.type == pg.MOUSEBUTTONDOWN:
+                return menu()
 
 
 #----------------------------------------------------------------------------------------------------------------------
@@ -183,7 +252,7 @@ def pause():
     draw(0)
     # Draw menu background
     menuSize = 350
-    pg.draw.rect(screen,(200,200,200),pg.Rect(winSize[0]//2 - menuSize//2,winSize[1]//2 - menuSize//2,menuSize,menuSize))
+    pg.draw.rect(screen,GREY,pg.Rect(winSize[0]//2 - menuSize//2,winSize[1]//2 - menuSize//2,menuSize,menuSize))
     # Draw menu text
     title = titleFont.render("Codenames",True,BLACK)
     screen.blit(title,(winSize[0]//2 - title.get_width()//2,winSize[1]//2 - title.get_height()//2 - 100))
