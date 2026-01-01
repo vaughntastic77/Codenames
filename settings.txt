@@ -1,5 +1,0 @@
-Settings
-
-numAssns = 1
-timer = 300
-style = 0
