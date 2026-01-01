@@ -2,7 +2,7 @@
 
 Codenames board game written in Python with [Pygame](https://www.pygame.org/wiki/about).
 
-![Alt text](images/board.png)
+![Alt text](images/screenshot.png)
 
 ## Table of Contents
 
