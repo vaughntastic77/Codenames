@@ -43,6 +43,7 @@ At the start of any turn, the pause menu can be opened with `P`. Here you can ch
 When a player wins, you can return to the menu `Space` or continue playing `C`.
 
 # Game Rules
+See the official rules at [here](https://filemanager.czechgames.com/storage/files/codenames/rules/codenames-rules-en.pdf).
 
 ## Objective:
 WIP
@@ -53,8 +54,24 @@ WIP
 ## Winning:
 WIP
 
+# Settings
+
+Time Limit: 
+
+Number of assassins:
+
+Styles: Classic | WIP: Family (Vaughns, Bertones, Malones), Avengers
+
 # Known Bugs
 
-All known fixable bugs are currently resolved.
+1. Save and load game are not functional
+
+2. Settings are not functional
+
+3. Missing animations
+
+<!-- All known fixable bugs are currently resolved. -->
+
+Not fixable bugs:
 
 1. There is currently a bug with pygame that sometimes causes the display to not update correctly.
