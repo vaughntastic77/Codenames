@@ -228,7 +228,7 @@ def loadGame():
 def newGame():
     global words, turn, guessing, guessLeft, score, cardsSelected
     # Words for card grid
-    words = random.sample(wordlist,25)
+    words = np.array(random.sample(list(set(wordlist)-set(words)),25))
 
     generateMap()
 
