@@ -22,12 +22,12 @@ Download just [codenames.py](https://github.com/vaughntastic77/Codenames/tree/ma
 Downlad ZIP of repository and open your OS folder:
 ### Mac (ARM)
 Extract and run [Codenames.app](https://github.com/vaughntastic77/Codenames/tree/main/mac-arm64/dist/Codenames.app) from [mac-arm64/dist](https://github.com/vaughntastic77/Codenames/tree/main/mac-arm64/dist).
-### Mac (Intel)
+### Mac (Intel) (WIP)
 Extract and run [Codenames.app](https://github.com/vaughntastic77/Codenames/tree/main/mac-x86_64/dist/Codenames.app) from [mac-x86_64/dist](https://github.com/vaughntastic77/Codenames/tree/main/mac-x86_64/dist).
-### Windows
+### Windows (WIP)
 Extract and run [Codenames.exe](https://github.com/vaughntastic77/Codenames/tree/main/win64/dist/Codenames.exe) from [win64/dist](https://github.com/vaughntastic77/Codenames/tree/main/win64/dist).
 
-# Game Instructions
+# Game Instructions (WIP)
 
 The game opens to the main menu. Here you can choose to resume the last saved game or start a new game.
 
@@ -42,7 +42,7 @@ At the start of any turn, the pause menu can be opened with `P`. Here you can ch
 
 When a player wins, you can return to the menu `Space` or continue playing `C`.
 
-# Game Rules
+# Game Rules (WIP)
 See the official rules at [here](https://filemanager.czechgames.com/storage/files/codenames/rules/codenames-rules-en.pdf).
 
 ## Objective:
@@ -54,7 +54,7 @@ WIP
 ## Winning:
 WIP
 
-# Settings
+# Settings (WIP)
 
 Time Limit: 
 
