@@ -64,11 +64,9 @@ Styles: Classic | WIP: Family (Vaughns, Bertones, Malones), Avengers
 
 # Known Bugs
 
-1. Save and load game are not functional
+1. Settings are not functional
 
-2. Settings are not functional
-
-3. Missing animations
+2. Missing animations
 
 <!-- All known fixable bugs are currently resolved. -->
 

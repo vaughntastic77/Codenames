@@ -1,0 +1,3 @@
+([('Codenames',
+   '/Users/vaughntastic/Desktop/My Stuff/Codenames/mac-arm64/dist/Codenames',
+   'EXECUTABLE')],)

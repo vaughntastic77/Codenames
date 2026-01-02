@@ -37,40 +37,40 @@ wordFont = pg.font.SysFont("Arial",36,bold=True)
 scoreFont = pg.font.SysFont("Arial",60,bold=True)
 
 # Load board image
-board = pg.transform.scale(pg.image.load("images/board.png"),winSize)
+board = pg.transform.scale(pg.image.load("assets/images/board.png"),winSize)
 
 # Load images
 cardSize = (5*61,3*60)
-cardImg = pg.transform.scale(pg.image.load("images/word-card.png"),cardSize)
-cardSelectImg = pg.transform.scale(pg.image.load("images/word-card-select.png"),cardSize)
-cardRedImg = pg.transform.scale(pg.image.load("images/word-card-red.png"),cardSize)
-cardBlueImg = pg.transform.scale(pg.image.load("images/word-card-blue.png"),cardSize)
-cardBlackImg = pg.transform.scale(pg.image.load("images/word-card-black.png"),cardSize)
-redImg1 = pg.transform.scale(pg.image.load("images/red1.png"),cardSize)
-redImg2 = pg.transform.scale(pg.image.load("images/red2.png"),cardSize)
-redImg3 = pg.transform.scale(pg.image.load("images/red1.png"),cardSize)
-redImg4 = pg.transform.scale(pg.image.load("images/red2.png"),cardSize)
+cardImg = pg.transform.scale(pg.image.load("assets/images/word-card.png"),cardSize)
+cardSelectImg = pg.transform.scale(pg.image.load("assets/images/word-card-select.png"),cardSize)
+cardRedImg = pg.transform.scale(pg.image.load("assets/images/word-card-red.png"),cardSize)
+cardBlueImg = pg.transform.scale(pg.image.load("assets/images/word-card-blue.png"),cardSize)
+cardBlackImg = pg.transform.scale(pg.image.load("assets/images/word-card-black.png"),cardSize)
+redImg1 = pg.transform.scale(pg.image.load("assets/images/red1.png"),cardSize)
+redImg2 = pg.transform.scale(pg.image.load("assets/images/red2.png"),cardSize)
+redImg3 = pg.transform.scale(pg.image.load("assets/images/red1.png"),cardSize)
+redImg4 = pg.transform.scale(pg.image.load("assets/images/red2.png"),cardSize)
 redImgs = [redImg1,redImg2,redImg3,redImg4]
-blueImg1 = pg.transform.scale(pg.image.load("images/blue1.png"),cardSize)
-blueImg2 = pg.transform.scale(pg.image.load("images/blue2.png"),cardSize)
-blueImg3 = pg.transform.scale(pg.image.load("images/blue1.png"),cardSize)
-blueImg4 = pg.transform.scale(pg.image.load("images/blue2.png"),cardSize)
+blueImg1 = pg.transform.scale(pg.image.load("assets/images/blue1.png"),cardSize)
+blueImg2 = pg.transform.scale(pg.image.load("assets/images/blue2.png"),cardSize)
+blueImg3 = pg.transform.scale(pg.image.load("assets/images/blue1.png"),cardSize)
+blueImg4 = pg.transform.scale(pg.image.load("assets/images/blue2.png"),cardSize)
 blueImgs = [blueImg1,blueImg2,blueImg3,blueImg4]
-bystImg1 = pg.transform.scale(pg.image.load("images/byst1.png"),cardSize)
-bystImg2 = pg.transform.scale(pg.image.load("images/byst2.png"),cardSize)
-bystImg3 = pg.transform.scale(pg.image.load("images/byst1.png"),cardSize)
-bystImg4 = pg.transform.scale(pg.image.load("images/byst2.png"),cardSize)
+bystImg1 = pg.transform.scale(pg.image.load("assets/images/byst1.png"),cardSize)
+bystImg2 = pg.transform.scale(pg.image.load("assets/images/byst2.png"),cardSize)
+bystImg3 = pg.transform.scale(pg.image.load("assets/images/byst1.png"),cardSize)
+bystImg4 = pg.transform.scale(pg.image.load("assets/images/byst2.png"),cardSize)
 bystImgs = [bystImg1,bystImg2,bystImg3,bystImg4]
-assnImg = pg.transform.scale(pg.image.load("images/assassin.png"),cardSize)
+assnImg = pg.transform.scale(pg.image.load("assets/images/assassin.png"),cardSize)
 rndNum = random.randrange(0,4)
 
-redOn = pg.transform.scale(pg.image.load("images/redOn.png"),(80,80))
-redOff = pg.transform.scale(pg.image.load("images/redOff.png"),(80,80))
-blueOn = pg.transform.scale(pg.image.load("images/blueOn.png"),(80,80))
-blueOff = pg.transform.scale(pg.image.load("images/blueOff.png"),(80,80))
+redOn = pg.transform.scale(pg.image.load("assets/images/redOn.png"),(80,80))
+redOff = pg.transform.scale(pg.image.load("assets/images/redOff.png"),(80,80))
+blueOn = pg.transform.scale(pg.image.load("assets/images/blueOn.png"),(80,80))
+blueOff = pg.transform.scale(pg.image.load("assets/images/blueOff.png"),(80,80))
 
 # Read all words into a list, only once
-with open('wordlist.txt', 'r') as f:
+with open('assets/wordlist.txt', 'r') as f:
     wordlist = [line.strip() for line in f if line.strip()]
 
 words = np.array(random.sample(wordlist,25))
@@ -202,19 +202,20 @@ def draw(headerText,opts):
 # Write data to savedGame.npz
 #----------------------------------------------------------------------------------------------------------------------
 def saveGame():
-    np.savez("savedGame_Codenames.npz",words=words, rbFirst=rbFirst, colorCards=colorCards, assnCards=assnCards, turn=turn, guessing=guessing, guessLeft=guessLeft, score=score, cardsSelected=cardsSelected)
+    np.savez("savedGame_Codenames.npz",words=words, rbFirst=rbFirst, colorCards=colorCards, assnCards=assnCards, bystCards=bystCards, turn=turn, guessing=guessing, guessLeft=guessLeft, score=score, cardsSelected=cardsSelected)
 
 #----------------------------------------------------------------------------------------------------------------------
 # Load data from savedGame.npz
 #----------------------------------------------------------------------------------------------------------------------
 def loadGame():
-    global words, rbFirst, colorCards, assnCards, turn, guessing, guessLeft, score, cardsSelected
-    fLoaded = np.load("savedGame_Codenames.npz")
+    global words, rbFirst, colorCards, assnCards, bystCards, turn, guessing, guessLeft, score, cardsSelected
+    fLoaded = np.load("savedGame_Codenames.npz",allow_pickle=True)
 
     words = fLoaded["words"]
     rbFirst = fLoaded["rbFirst"]
     colorCards = fLoaded["colorCards"]
     assnCards = fLoaded["assnCards"]
+    bystCards = fLoaded["bystCards"]
     turn = fLoaded["turn"]
     guessing = fLoaded["guessing"]
     guessLeft = fLoaded["guessLeft"]
@@ -257,8 +258,8 @@ def chooseMap():
             elif event.type == pg.KEYDOWN:
                 # Generate new map
                 if event.key == pg.K_SPACE:
-                    generateMap()
                     # Draw instructions
+                    generateMap()
                     draw(textGen,0)
                 # Confrim chosen map
                 elif event.key == pg.K_RETURN:
@@ -332,8 +333,8 @@ def menu():
                     quit()
 
 #----------------------------------------------------------------------------------------------------------------------
-# Show settings menu and wait for selection
 #----------------------------------------------------------------------------------------------------------------------
+# Show settings menu and wait for selection
 def settingsMenu():
     # Draw menu background
     drawMenuBG((500,400))
@@ -443,9 +444,10 @@ def pause():
 # Main game loop
 #----------------------------------------------------------------------------------------------------------------------
 def main():
-    global words, rbFirst, colorCards, assnCards, turn, guessing, guessLeft, score, cardsSelected
+    global words, rbFirst, colorCards, assnCards, bystCards, turn, guessing, guessLeft, score, cardsSelected
     running = True
     while running:
+        draw("",0)
         menu()
         # In game loop
         inGame = True
@@ -510,7 +512,7 @@ def main():
                                     if winner != -1:
                                         draw("",1)
                                         # Draw menu background
-                                        drawMenuBG((500,300))
+                                        drawMenuBG((540,300))
                                         # Draw menu text
                                         winnerColor = [RED,BLUE]
                                         title = titleFont.render(teamColors[winner]+" wins!",True,winnerColor[winner])
@@ -569,5 +571,4 @@ def main():
     # Close pygame
     pg.quit()
 
-draw("",0)
 main()
